@@ -9,6 +9,7 @@ public class Aliens {
 	private double precioExtremidad;
 	private double precioOjo;
 	private double precioCuerpo;
+	private double precioTotal = 0;
 	
 	public Aliens(int tamaño, String color) {
 		if(tamaño < 5) {
@@ -26,6 +27,10 @@ public class Aliens {
         this.precioExtremidad = this.tamaño * 0.10;   
         this.precioOjo = this.tamaño * 0.05;
 	}
+	
+	public double getPrecioTotal() {
+        return precioTotal;
+    }
 	
 	public int getTamaño() {
 		return tamaño;
@@ -75,6 +80,7 @@ public boolean agregarBrazos(int cantidad) {
         
         if (this.numeroBrazos + this.numeroPies + cantidad <= 10) {
             this.numeroBrazos += cantidad;
+            calcularPrecioTotal();
             return true;
         }
         return false;
@@ -84,6 +90,7 @@ public boolean agregarBrazos(int cantidad) {
         
         if (this.numeroBrazos + this.numeroPies + cantidad <= 10) {
             this.numeroPies += cantidad;
+            calcularPrecioTotal();
             return true;
         }
         return false; 
@@ -102,9 +109,18 @@ public boolean agregarBrazos(int cantidad) {
 
         if (this.numeroOjos + cantidad <= maxOjos) {
             this.numeroOjos += cantidad;
+            calcularPrecioTotal();
             return true; 
         }
         
         return false; 
+    }
+    
+    private void calcularPrecioTotal() {
+        int totalExtremidades = this.numeroBrazos + this.numeroPies;
+        
+        this.precioTotal = this.precioCuerpo 
+                         + (totalExtremidades * this.precioExtremidad) 
+                         + (this.numeroOjos * this.precioOjo);
     }
 }
